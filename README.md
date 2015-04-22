@@ -2,6 +2,8 @@
 
 Wordpress with nginx web-server
 
+http://localhost
+
 #MySQL
 
 user: root 
