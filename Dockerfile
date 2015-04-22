@@ -11,8 +11,6 @@ COPY configs/nginx/default /etc/nginx/sites-available/default
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 RUN sudo apt-get  install -y mysql-server mysql-client
-RUN service mysql start
-RUN mysql -uroot -proot -e 'create database wordpress'
 
 # SSH service
 RUN sudo apt-get install -y openssh-server openssh-client
@@ -27,6 +25,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 #configs bash start
 COPY configs/autostart.sh /root/autostart.sh
+COPY configs/autostart /root/autostart
 RUN chmod +x /root/autostart.sh
 COPY configs/bash.bashrc /etc/bash.bashrc
 
