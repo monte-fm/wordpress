@@ -11,6 +11,7 @@ COPY configs/nginx/default /etc/nginx/sites-available/default
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 RUN sudo apt-get  install -y mysql-server mysql-client
+RUN service mysql start
 RUN mysql -uroot -proot -e 'create database wordpress'
 
 # SSH service
