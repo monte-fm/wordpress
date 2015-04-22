@@ -33,13 +33,11 @@ COPY configs/bash.bashrc /etc/bash.bashrc
 RUN alias ll='ls -la'
 
 #install Wordpress
-RUN mkdir -p /var/www
+RUN mkdir -p /var/www/wordpress
 RUN cd /var/www
 RUN wget http://wordpress.org/latest.tar.gz
-RUN tar latest.tar.gz
-RUN rm /var/www/latest.tar.gz
-RUN chown -R www-data:www-data /var/www/wordpress
 COPY configs/wp-config.php /var/www/wordpress/wp-config.php
+RUN chown -R www-data:www-data /var/www/wordpress
 
 #open ports
 EXPOSE 80 22
