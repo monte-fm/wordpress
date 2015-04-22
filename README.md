@@ -33,3 +33,4 @@ server {
                                 proxy_pass http://localhost:80;
                         }
 }
+
