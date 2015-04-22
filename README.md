@@ -2,7 +2,7 @@
 
 Wordpress with nginx web-server
 
-[] http://localhost
+[http://localhost]: http://localhost
 
 #MySQL
 ```
