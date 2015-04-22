@@ -14,9 +14,9 @@ db_name: wordpress
 ```
 ssh -p22 root@localhost
 password: root
-
-#NGINX server config file for communicate with docker
 ```
+#NGINX server config file for communicate with docker
+
 ```
 server {
         listen *:80;
