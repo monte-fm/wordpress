@@ -20,6 +20,7 @@ password: root
 
 #NGINX server config file for communicate with docker
 
+```
 server {
         listen *:80;
         server_name localhost;
@@ -33,4 +34,4 @@ server {
                                 proxy_pass http://localhost:80;
                         }
 }
-
+```
