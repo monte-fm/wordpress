@@ -1,3 +1,9 @@
+#Create container
+```
+docker run -i -t -d -p 80:80 -p 22:22 cristo/wordpress /bin/bash
+```
+
+
 # wordpress
 
 Wordpress with nginx web-server
