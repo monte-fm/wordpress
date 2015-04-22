@@ -33,7 +33,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 #configs bash start
 COPY configs/autostart.sh /root/autostart.sh
 COPY configs/autostart /root/autostart
-RUN chmod +x /root/autostart.sh
+RUN chmod +x /root/autostart.sh /root/autostart
 COPY configs/bash.bashrc /etc/bash.bashrc
 
 #aliases
