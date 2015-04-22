@@ -7,6 +7,13 @@ RUN apt-get install -y nano nginx wget
 RUN apt-get install -y php5-fpm php5-mysql
 COPY configs/nginx/default /etc/nginx/sites-available/default
 
+
+#install Wordpress
+RUN mkdir -p /var/www/wordpress
+RUN cd /var/www && wget http://wordpress.org/latest.tar.gz
+COPY configs/wp-config.php /var/www/wordpress/wp-config.php
+RUN chown -R www-data:www-data /var/www/wordpress
+
 #MySQL install + password
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
@@ -31,13 +38,6 @@ COPY configs/bash.bashrc /etc/bash.bashrc
 
 #aliases
 RUN alias ll='ls -la'
-
-#install Wordpress
-RUN mkdir -p /var/www/wordpress
-RUN cd /var/www
-RUN wget http://wordpress.org/latest.tar.gz
-COPY configs/wp-config.php /var/www/wordpress/wp-config.php
-RUN chown -R www-data:www-data /var/www/wordpress
 
 #open ports
 EXPOSE 80 22
