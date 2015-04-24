@@ -38,3 +38,8 @@ server {
                         }
 }
 ```
+
+#Origin
+[Docker Hub] (https://registry.hub.docker.com/u/cristo/wordpress/)
+
+[Git Hub] (https://github.com/monte-fm/wordpress)
