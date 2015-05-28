@@ -14,8 +14,4 @@ server {
                 include fastcgi_params;
                 fastcgi_pass unix:/var/run/php5-fpm.sock;
         }
-
-error_log /var/log/nginx/wordpress_error.log;
-access_log /var/log/nginx/wordpress_access.log;
-
 }
