@@ -1,6 +1,6 @@
 #Create container
 ```
-docker run -i -t -d -p 80:80 -p 22:22 cristo/wordpress /bin/bash
+docker run -i -t -d -p 1000:80 -p 1001:22 cristo/wordpress /bin/bash
 ```
 
 
@@ -18,7 +18,7 @@ db_name: wordpress
 ```
 #SSH
 ```
-ssh -p22 root@localhost
+ssh -p1001 root@localhost
 password: root
 ```
 #NGINX server config file for communicate with docker
@@ -34,7 +34,7 @@ server {
                                 proxy_set_header Host $host;
                                 proxy_set_header X-Real_IP $remote_addr;
                                 proxy_cache off;
-                                proxy_pass http://localhost:80;
+                                proxy_pass http://localhost:1000;
                         }
 }
 ```
