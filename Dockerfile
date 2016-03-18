@@ -42,6 +42,7 @@ RUN alias ll='ls -la'
 #Add colorful command line
 RUN echo "force_color_prompt=yes" >> .bashrc
 RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >> .bashrc
+RUN chown -R www-data:www-data /var/www/wordpress
 
 #open ports
 EXPOSE 80 22
