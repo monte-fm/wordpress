@@ -1,4 +1,4 @@
-FROM      ubuntu
+FROM      ubuntu:14.04.4
 MAINTAINER Olexander Kutsenko <olexander.kutsenko@gmail.com>
 
 #install PHP
@@ -6,7 +6,6 @@ RUN apt-get update
 RUN apt-get install -y nano nginx wget
 RUN apt-get install -y php5-fpm php5-mysql
 COPY configs/nginx/default /etc/nginx/sites-available/default
-
 
 #install Wordpress
 RUN mkdir -p /var/www/wordpress
@@ -36,8 +35,12 @@ COPY configs/autostart /root/autostart
 RUN chmod +x /root/autostart.sh /root/autostart
 COPY configs/bash.bashrc /etc/bash.bashrc
 
+#Install locale
+RUN locale-gen en_US.UTF-8
+RUN dpkg-reconfigure locales
+
 #aliases
-RUN alias ll='ls -la'
+RUN echo "alias ll='ls -la'" >> .bashrc
 
 #Add colorful command line
 RUN echo "force_color_prompt=yes" >> .bashrc
