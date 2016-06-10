@@ -11,4 +11,5 @@ echo "FLUSH PRIVILEGES;" | mysql -uroot -proot
 cd /var/www/ && tar -zxvf latest.tar.gz
 rm /var/www/latest.tar.gz
 mv /root/autostart /root/autostart.sh
+chown -R www-data:www-data /var/www/wordpress
 
