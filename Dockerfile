@@ -1,22 +1,39 @@
 FROM      ubuntu:14.04.4
 MAINTAINER Olexander Kutsenko <olexander.kutsenko@gmail.com>
 
-#install PHP
+#install Nginx
 RUN apt-get update
 RUN apt-get install -y nano nginx wget
-RUN apt-get install -y php5-fpm php5-mysql
 COPY configs/nginx/default /etc/nginx/sites-available/default
 
-#install Wordpress
-RUN mkdir -p /var/www/wordpress
-RUN cd /var/www && wget http://wordpress.org/latest.tar.gz
-COPY configs/wp-config.php /var/www/wordpress/wp-config.php
-RUN chown -R www-data:www-data /var/www/wordpress
+#Install PHP7
+RUN apt-get install -y language-pack-en-base
+RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
+RUN apt-get update
+RUN apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-mysql \
+    php7.0-fpm
+RUN rm /etc/php/7.0/cgi/php.ini
+RUN rm /etc/php/7.0/cli/php.ini
+RUN rm /etc/php/7.0/fpm/php.ini
+RUN rm /etc/php/7.0/fpm/pool.d/www.conf
+COPY configs/php/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+COPY configs/php/php.ini  /etc/php/7.0/cgi/php.ini
+COPY configs/php/php.ini  /etc/php/7.0/cli/php.ini
+COPY configs/php/php.ini  /etc/php/7.0/fpm/php.ini
 
-#MySQL install + password
-RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-RUN sudo apt-get  install -y mysql-server mysql-client
+#Install Percona Mysql 5.6 server
+RUN wget https://repo.percona.com/apt/percona-release_0.1-3.$(lsb_release -sc)_all.deb
+RUN dpkg -i percona-release_0.1-3.$(lsb_release -sc)_all.deb
+RUN rm percona-release_0.1-3.$(lsb_release -sc)_all.deb
+RUN apt-get update
+RUN echo "percona-server-server-5.6 percona-server-server/root_password password root" | sudo debconf-set-selections
+RUN echo "percona-server-server-5.6 percona-server-server/root_password_again password root" | sudo debconf-set-selections
+RUN apt-get install -y percona-server-server-5.6
+COPY configs/mysql/my.cnf /etc/mysql/my.cnf
+RUN service mysql start && echo "create database wordpress" | mysql -uroot -proot
+RUN service mysql start && echo "CREATE USER 'wp'@'%' IDENTIFIED BY 'K7jtHs9Qkr';" | mysql -uroot -proot
+RUN service mysql start && echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp'@'%';" | mysql -uroot -proot
+RUN service mysql start && echo "FLUSH PRIVILEGES;" | mysql -uroot -proot
 
 # SSH service
 RUN sudo apt-get install -y openssh-server openssh-client
@@ -40,11 +57,20 @@ RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 
 #aliases
-RUN echo "alias ll='ls -la'" >> .bashrc
+RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
 #Add colorful command line
-RUN echo "force_color_prompt=yes" >> .bashrc
-RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >> .bashrc
+RUN echo "force_color_prompt=yes" >> ~/.bashrc
+RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >> ~/.bashrc
+
+#install Wordpress
+RUN mkdir -p /var/www/wordpress
+RUN cd /var/www && wget http://wordpress.org/latest.tar.gz
+COPY configs/wp-config.php /var/www/wordpress/wp-config.php
+RUN chown -R www-data:www-data /var/www/wordpress
+RUN cd /var/www/ && tar -zxvf latest.tar.gz
+RUN rm /var/www/latest.tar.gz && mv /root/autostart /root/autostart.sh
+RUN chown -R www-data:www-data /var/www
 
 #open ports
 EXPOSE 80 22

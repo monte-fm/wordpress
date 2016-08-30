@@ -1,6 +1,6 @@
 #Create container
 ```
-docker run -i -t -d -p 1000:80 -p 1001:22 cristo/wordpress /bin/bash
+docker run -i -t -d -p 1000:80 -p 1001:22 cristo/wordpress:php7 /bin/bash
 ```
 
 #MySQL
