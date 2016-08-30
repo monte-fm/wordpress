@@ -10,7 +10,7 @@ RUN apt-get install -y git git-core vim nano mc tmux curl zip unzip
 
 #Install PHP7
 RUN apt-get install -y language-pack-en-base
-RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
+RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-mysql \
     php7.0-fpm
