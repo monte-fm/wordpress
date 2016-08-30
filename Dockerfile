@@ -75,7 +75,7 @@ RUN cd /var/www && wget http://wordpress.org/latest.tar.gz
 COPY configs/wp-config.php /var/www/wordpress/wp-config.php
 RUN chown -R www-data:www-data /var/www/wordpress
 RUN cd /var/www/ && tar -zxvf latest.tar.gz
-RUN rm /var/www/latest.tar.gz && mv /root/autostart /root/autostart.sh
+RUN rm /var/www/latest.tar.gz
 RUN chown -R www-data:www-data /var/www
 
 #open ports
