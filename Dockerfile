@@ -3,6 +3,7 @@ MAINTAINER Olexander Kutsenko <olexander.kutsenko@gmail.com>
 
 #install Nginx
 RUN apt-get update
+RUN apt-get upgrade -y
 RUN apt-get install -y nano nginx wget
 COPY configs/nginx/default /etc/nginx/sites-available/default
 RUN apt-get install -y git git-core vim nano mc tmux curl zip unzip
