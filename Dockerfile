@@ -4,13 +4,18 @@ MAINTAINER Olexander Kutsenko <olexander.kutsenko@gmail.com>
 #install Nginx
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y nano nginx wget
+RUN apt-get install -y language-pack-en-base
+RUN apt-get install -y software-properties-common python-software-properties
+RUN echo "postfix postfix/mailname string magento.hostname.com" | sudo debconf-set-selections
+RUN echo "postfix postfix/main_mailer_type string 'Magento E-commerce'" | sudo debconf-set-selections
+RUN apt-get install -y supervisor postfix wget 
+RUN apt-get install -y nano nginx
 COPY configs/nginx/default /etc/nginx/sites-available/default
 RUN apt-get install -y git git-core vim nano mc tmux curl zip unzip
 
 #Install PHP7
 RUN apt-get install -y language-pack-en-base
-RUN add-apt-repository ppa:ondrej/php
+RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-mysql \
     php7.0-fpm
