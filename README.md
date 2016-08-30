@@ -3,13 +3,6 @@
 docker run -i -t -d -p 1000:80 -p 1001:22 cristo/wordpress /bin/bash
 ```
 
-
-# wordpress
-
-Wordpress with nginx web-server
-
-[localhost] (http://localhost)
-
 #MySQL
 ```
 user: root 
