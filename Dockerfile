@@ -5,6 +5,7 @@ MAINTAINER Olexander Kutsenko <olexander.kutsenko@gmail.com>
 RUN apt-get update
 RUN apt-get install -y nano nginx wget
 COPY configs/nginx/default /etc/nginx/sites-available/default
+RUN apt-get install -y git git-core vim nano mc tmux curl zip unzip
 
 #Install PHP7
 RUN apt-get install -y language-pack-en-base
