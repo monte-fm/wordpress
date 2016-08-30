@@ -55,7 +55,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 #configs bash start
 COPY configs/autostart.sh /root/autostart.sh
-RUN chmod +x /root/autostart.sh /root/autostart
+RUN chmod +x /root/autostart.sh
 COPY configs/bash.bashrc /etc/bash.bashrc
 
 #Install locale
