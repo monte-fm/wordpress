@@ -38,8 +38,8 @@ RUN echo "percona-server-server-5.6 percona-server-server/root_password_again pa
 RUN apt-get install -y percona-server-server-5.6
 COPY configs/mysql/my.cnf /etc/mysql/my.cnf
 RUN service mysql start && echo "create database wordpress" | mysql -uroot -proot
-RUN service mysql start && echo "CREATE USER 'wp'@'%' IDENTIFIED BY 'K7jtHs9Qkr';" | mysql -uroot -proot
-RUN service mysql start && echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp'@'%';" | mysql -uroot -proot
+RUN service mysql start && echo "CREATE USER 'wp'@'localhost' IDENTIFIED BY 'K7jtHs9Qkr';" | mysql -uroot -proot
+RUN service mysql start && echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp'localhost'';" | mysql -uroot -proot
 RUN service mysql start && echo "FLUSH PRIVILEGES;" | mysql -uroot -proot
 
 # SSH service
